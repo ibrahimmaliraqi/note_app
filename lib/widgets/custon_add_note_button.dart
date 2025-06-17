@@ -3,8 +3,10 @@ import 'package:note_app/constants.dart';
 
 class CustomAddNoteButton
     extends StatelessWidget {
+  final bool isLoading;
   final void Function()? onTap;
   const CustomAddNoteButton({
+    this.isLoading = false,
     super.key,
     this.onTap,
   });
@@ -22,13 +24,22 @@ class CustomAddNoteButton
           borderRadius: BorderRadius.circular(16),
         ),
         child: Center(
-          child: Text(
-            "Add",
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 19,
-            ),
-          ),
+          child: isLoading
+              ? SizedBox(
+                  height: 20,
+                  width: 20,
+                  child:
+                      CircularProgressIndicator(
+                        color: Colors.black,
+                      ),
+                )
+              : Text(
+                  "Add",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 19,
+                  ),
+                ),
         ),
       ),
     );

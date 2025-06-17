@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:note_app/cubits/add_note_cubit/add_note_cubit.dart';
 import 'package:note_app/cubits/add_note_cubit/add_note_satate.dart';
+import 'package:note_app/cubits/notes_cubit/notes_cubit.dart';
 import 'package:note_app/mdels/note_model.dart';
 import 'package:note_app/widgets/custom_text_feild.dart';
 import 'package:note_app/widgets/custon_add_note_button.dart';
@@ -26,24 +28,28 @@ class _AddNotesButtonState
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => AddNoteCubit(),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 16,
-          vertical: 22,
-        ),
-        child: BlocConsumer<AddNoteCubit, AddNoteSatate>(
-          listener: (context, state) {
-            if (state is AddNoteFailure) {
-              print(state.errMessage);
-            } else if (state is AddNoteSuccess) {
-              Navigator.pop(context);
-            }
-          },
-          builder: (context, state) {
-            return ModalProgressHUD(
-              inAsyncCall: state is AddNoteLoading
-                  ? true
-                  : false,
+      child: BlocConsumer<AddNoteCubit, AddNoteSatate>(
+        listener: (context, state) {
+          if (state is AddNoteFailure) {
+            print(state.errMessage);
+          } else if (state is AddNoteSuccess) {
+            Navigator.pop(context);
+          }
+        },
+        builder: (context, state) {
+          return AbsorbPointer(
+            absorbing: state is AddNoteLoading
+                ? true
+                : false,
+            child: Padding(
+              padding: EdgeInsets.only(
+                right: 16,
+                left: 16,
+                top: 22,
+                bottom: MediaQuery.of(
+                  context,
+                ).viewInsets.bottom,
+              ),
               child: SingleChildScrollView(
                 child: Form(
                   autovalidateMode: auto,
@@ -66,9 +72,20 @@ class _AddNotesButtonState
                         lable: "Content",
                         maxLIines: 5,
                       ),
-                      SizedBox(height: 50),
+                      SizedBox(height: 30),
                       CustomAddNoteButton(
+                        isLoading:
+                            state
+                                is AddNoteLoading
+                            ? true
+                            : false,
                         onTap: () {
+                          DateTime now =
+                              DateTime.now();
+                          String formattedDate =
+                              DateFormat(
+                                'yyyy-MM-dd – kk:mm',
+                              ).format(now);
                           if (auth.currentState!
                               .validate()) {
                             auth.currentState!
@@ -81,8 +98,8 @@ class _AddNotesButtonState
                                     title: title!,
                                     subtitle:
                                         subtitle!,
-                                    date: DateTime.now()
-                                        .toString(),
+                                    date:
+                                        formattedDate,
                                     color: Colors
                                         .red
                                         .value,
@@ -100,9 +117,9 @@ class _AddNotesButtonState
                   ),
                 ),
               ),
-            );
-          },
-        ),
+            ),
+          );
+        },
       ),
     );
   }

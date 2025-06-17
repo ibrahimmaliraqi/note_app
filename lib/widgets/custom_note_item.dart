@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:note_app/mdels/note_model.dart';
 import 'package:note_app/widgets/custom_note_card.dart';
 
 class CustomNoteItem extends StatelessWidget {
-  const CustomNoteItem({super.key});
-
+  const CustomNoteItem({super.key, this.note});
+  final NoteModel? note;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -12,17 +13,17 @@ class CustomNoteItem extends StatelessWidget {
         vertical: 17,
       ),
       decoration: BoxDecoration(
-        color: Color(0xffffcd7a),
+        color: Color(note!.color),
         borderRadius: BorderRadius.circular(17),
       ),
       child: Column(
         crossAxisAlignment:
             CrossAxisAlignment.end,
         children: [
-          CustomNoteCard(),
+          CustomNoteCard(note: note),
           SizedBox(height: 10),
           Text(
-            "May 22,2025",
+            "${note!.date}",
             style: TextStyle(
               color: Colors.black.withOpacity(.7),
             ),

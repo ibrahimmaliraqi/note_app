@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:note_app/mdels/note_model.dart';
 import 'package:note_app/widgets/custom_delete_buttons.dart';
 
 class CustomNoteCard extends StatelessWidget {
-  const CustomNoteCard({super.key});
+  final NoteModel? note;
+
+  const CustomNoteCard({super.key, this.note});
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +16,7 @@ class CustomNoteCard extends StatelessWidget {
           bottom: 14,
         ),
         child: Text(
-          "Flutter tips",
+          "${note!.title}",
           style: TextStyle(
             color: Colors.black,
             fontSize: 26,
@@ -21,7 +24,7 @@ class CustomNoteCard extends StatelessWidget {
         ),
       ),
       subtitle: Text(
-        "Build flutter app with ibrahim mohammed",
+        "${note!.subtitle}",
         style: TextStyle(
           color: Colors.black.withOpacity(.7),
           fontSize: 18,
