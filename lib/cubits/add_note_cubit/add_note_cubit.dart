@@ -8,7 +8,13 @@ class AddNoteCubit extends Cubit<AddNoteSatate> {
   AddNoteCubit() : super(AddNoteInstite());
 
   addNote(NoteModel note) async {
-    var addNote = Hive.box<NoteModel>(kHiveBox);
-    await addNote.add(note);
+    emit(AddNoteLoading());
+    try {
+      var addNote = Hive.box<NoteModel>(kHiveBox);
+      await addNote.add(note);
+      emit(AddNoteSuccess());
+    } catch (e) {
+      emit(AddNoteFailure(e.toString()));
+    }
   }
 }
