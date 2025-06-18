@@ -30,7 +30,7 @@ class CustomNoteCard extends StatelessWidget {
           fontSize: 18,
         ),
       ),
-      trailing: CustomDeleteButton(),
+      trailing: CustomDeleteButton(note: note),
     );
   }
 }

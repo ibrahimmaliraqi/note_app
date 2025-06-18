@@ -1,12 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:note_app/mdels/note_model.dart';
 
 class CustomDeleteButton extends StatelessWidget {
-  const CustomDeleteButton({super.key});
+  final NoteModel? note;
+
+  const CustomDeleteButton({
+    super.key,
+    this.note,
+  });
 
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      onPressed: () {},
+      onPressed: () {
+        note!.delete();
+      },
       icon: Icon(
         Icons.delete,
         size: 28,

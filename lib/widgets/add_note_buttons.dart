@@ -31,10 +31,8 @@ class _AddNotesButtonState
       child: BlocConsumer<AddNoteCubit, AddNoteSatate>(
         listener: (context, state) {
           if (state is AddNoteFailure) {
-            print(state.errMessage);
-          } else if (state is AddNoteSuccess) {
-            Navigator.pop(context);
-          }
+            // print(state.errMessage);
+          } else if (state is AddNoteSuccess) {}
         },
         builder: (context, state) {
           return AbsorbPointer(

@@ -8,3 +8,5 @@ sealed class NotesState extends Equatable {
 }
 
 final class NotesInitial extends NotesState {}
+
+final class NotesSuccess extends NotesState {}
